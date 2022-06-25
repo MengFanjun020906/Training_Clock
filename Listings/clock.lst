@@ -1,0 +1,608 @@
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE CLOCK
+OBJECT MODULE PLACED IN .\Objects\clock.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE clock.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\clo
+                    -ck.lst) TABS(2) OBJECT(.\Objects\clock.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include<intrins.h>
+   3          sbit R1=P3^0;//µÚÒ»ÅÅµÄ³õÊ¼»¯
+   4          sbit R2=P3^1;//µÚ¶þÅÅµÄ³õÊ¼»¯
+   5          sbit R3=P3^2;//µÚÈýÅÅµÄ³õÊ¼»¯
+   6          sbit R4=P3^3;//µÚËÄÅÅµÄ³õÊ¼»¯
+   7          unsigned char code num[]={0XC0,0XF9,0XA4,0XB0,0X99,0X92,0X82,0XF8,0X80,0X90,0xbf,0xff};//0-9µÄÊý×ÖÊý×é,ºóÃ
+             -æÁ½¸öÎª-ºÍÈ«Ãð
+   8          unsigned char count=0;
+   9          unsigned char second=0;
+  10          unsigned char minute=59;
+  11          unsigned char hour=23;
+  12          int mode;
+  13          void hour_blink()
+  14          {
+  15   1                    int mode=1;
+  16   1                    int i=50,j=50;
+  17   1        if(R1==0)
+  18   1        {
+  19   2          delay_ms(50);
+*** WARNING C206 IN LINE 19 OF clock.c: 'delay_ms': missing function-prototype
+*** ERROR C267 IN LINE 19 OF clock.c: 'delay_ms': requires ANSI-style prototype
+  20   2          if(R1==0)
+  21   2          {
+  22   3            hour++;
+  23   3            if(hour==24) hour=0;
+  24   3            while(R1==0);
+  25   3          }
+  26   2        }
+  27   1        if(R4==0)
+  28   1        {
+  29   2          delay_ms(50);
+  30   2          if(R4==0)
+  31   2          {
+  32   3            hour--;
+  33   3            if(hour==0) hour=24;
+  34   3            while(R4==0);
+  35   3          }
+  36   2        }
+  37   1                    while(i--)
+  38   1                    {
+  39   2                      P2=0xC0;P0=weizhi[0];
+*** ERROR C202 IN LINE 39 OF clock.c: 'weizhi': undefined identifier
+  40   2                      P2=0xFF;P0=num[hour/10];
+  41   2                      delay_ms(1);
+  42   2                      P2=0xC0;P0=weizhi[1];
+*** ERROR C202 IN LINE 42 OF clock.c: 'weizhi': undefined identifier
+  43   2                      P2=0xFF;P0=num[hour%10];
+  44   2                      delay_ms(1);
+  45   2                            
+  46   2                      delay_ms(1);
+  47   2                      P2=0xC0;P0=weizhi[5];
+*** ERROR C202 IN LINE 47 OF clock.c: 'weizhi': undefined identifier
+  48   2                      P2=0xFF;P0=num[10];
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 2   
+
+  49   2                      delay_ms(1);
+  50   2                      
+  51   2                      delay_ms(1);
+  52   2                      P2=0xC0;P0=weizhi[2];
+*** ERROR C202 IN LINE 52 OF clock.c: 'weizhi': undefined identifier
+  53   2                      P2=0xFF;P0=num[10];
+  54   2                      delay_ms(1);
+  55   2                      
+  56   2                      delay_ms(1);
+  57   2                      P2=0xC0;P0=weizhi[7];
+*** ERROR C202 IN LINE 57 OF clock.c: 'weizhi': undefined identifier
+  58   2                      P2=0xFF;P0=num[second%10];
+  59   2                      delay_ms(1);
+  60   2                            
+  61   2                      delay_ms(1);
+  62   2                      P2=0xC0;P0=weizhi[6];
+*** ERROR C202 IN LINE 62 OF clock.c: 'weizhi': undefined identifier
+  63   2                      P2=0xFF;P0=num[second/10];
+  64   2                      delay_ms(1);
+  65   2                      
+  66   2                      delay_ms(1);
+  67   2                      P2=0xC0;P0=weizhi[3];
+*** ERROR C202 IN LINE 67 OF clock.c: 'weizhi': undefined identifier
+  68   2                      P2=0xFF;P0=num[minute/10];
+  69   2                      delay_ms(1);
+  70   2                      
+  71   2                      delay_ms(1);
+  72   2                      P2=0xC0;P0=weizhi[4];
+*** ERROR C202 IN LINE 72 OF clock.c: 'weizhi': undefined identifier
+  73   2                      P2=0xFF;P0=num[minute%10];
+  74   2                      delay_ms(1);
+  75   2                    
+  76   2                    }
+  77   1                    i=50;
+  78   1                    while(j--)
+  79   1                    {
+  80   2                            
+  81   2                P2=0xC0;P0=weizhi[0];
+*** ERROR C202 IN LINE 81 OF clock.c: 'weizhi': undefined identifier
+  82   2                P2=0xFF;P0=num[11];       
+  83   2                delay_ms(1);
+  84   2                P2=0xC0;P0=weizhi[1];
+*** ERROR C202 IN LINE 84 OF clock.c: 'weizhi': undefined identifier
+  85   2                P2=0xFF;P0=num[11];
+  86   2                delay_ms(1);  
+  87   2                      
+  88   2                      delay_ms(1);
+  89   2                      P2=0xC0;P0=weizhi[5];
+*** ERROR C202 IN LINE 89 OF clock.c: 'weizhi': undefined identifier
+  90   2                      P2=0xFF;P0=num[10];
+  91   2                      delay_ms(1);
+  92   2                      
+  93   2                      delay_ms(1);
+  94   2                      P2=0xC0;P0=weizhi[2];
+*** ERROR C202 IN LINE 94 OF clock.c: 'weizhi': undefined identifier
+  95   2                      P2=0xFF;P0=num[10];
+  96   2                      delay_ms(1);
+  97   2                      
+  98   2                      delay_ms(1);
+  99   2                      P2=0xC0;P0=weizhi[7];
+*** ERROR C202 IN LINE 99 OF clock.c: 'weizhi': undefined identifier
+ 100   2                      P2=0xFF;P0=num[second%10];
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 3   
+
+ 101   2                      delay_ms(1);
+ 102   2                            
+ 103   2                      delay_ms(1);
+ 104   2                      P2=0xC0;P0=weizhi[6];
+*** ERROR C202 IN LINE 104 OF clock.c: 'weizhi': undefined identifier
+ 105   2                      P2=0xFF;P0=num[second/10];
+ 106   2                      delay_ms(1);
+ 107   2                      
+ 108   2                      delay_ms(1);
+ 109   2                      P2=0xC0;P0=weizhi[3];
+*** ERROR C202 IN LINE 109 OF clock.c: 'weizhi': undefined identifier
+ 110   2                      P2=0xFF;P0=num[minute/10];
+ 111   2                      delay_ms(1);
+ 112   2                      
+ 113   2                      delay_ms(1);
+ 114   2                      P2=0xC0;P0=weizhi[4];
+*** ERROR C202 IN LINE 114 OF clock.c: 'weizhi': undefined identifier
+ 115   2                      P2=0xFF;P0=num[minute%10];
+ 116   2                      delay_ms(1);
+ 117   2                    }
+ 118   1                    j=50;
+ 119   1                                }
+ 120          
+ 121          void minute_blink()
+ 122          {
+ 123   1        int mode=2;
+ 124   1        int i=50,j=50;
+ 125   1        if(R1==0)
+ 126   1        {
+ 127   2          delay_ms(50);
+ 128   2          if(R1==0)
+ 129   2          {
+ 130   3            minute++;
+ 131   3            if(minute==60) minute=0;
+ 132   3            while(R1==0);
+ 133   3          }
+ 134   2        }
+ 135   1        if(R4==0)
+ 136   1        {
+ 137   2          delay_ms(50);
+ 138   2          if(R4==0)
+ 139   2          {
+ 140   3            minute--;
+ 141   3            if(minute==0) minute=60;
+ 142   3            while(R4==0);
+ 143   3          }
+ 144   2        }
+ 145   1      
+ 146   1        
+ 147   1                    
+ 148   1                    while(i--)
+ 149   1                    {
+ 150   2                      P2=0xC0;P0=weizhi[3];
+*** ERROR C202 IN LINE 150 OF clock.c: 'weizhi': undefined identifier
+ 151   2                      P2=0xFF;P0=num[minute/10];
+ 152   2                      delay_ms(1);
+ 153   2                      P2=0xC0;P0=weizhi[4];
+*** ERROR C202 IN LINE 153 OF clock.c: 'weizhi': undefined identifier
+ 154   2                      P2=0xFF;P0=num[minute%10];
+ 155   2                      delay_ms(1);
+ 156   2                            
+ 157   2                      delay_ms(1);
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 4   
+
+ 158   2                      P2=0xC0;P0=weizhi[5];
+*** ERROR C202 IN LINE 158 OF clock.c: 'weizhi': undefined identifier
+ 159   2                      P2=0xFF;P0=num[10];
+ 160   2                      delay_ms(1);
+ 161   2                      
+ 162   2                      delay_ms(1);
+ 163   2                      P2=0xC0;P0=weizhi[2];
+*** ERROR C202 IN LINE 163 OF clock.c: 'weizhi': undefined identifier
+ 164   2                      P2=0xFF;P0=num[10];
+ 165   2                      delay_ms(1);
+ 166   2                      
+ 167   2                      delay_ms(1);
+ 168   2                      P2=0xC0;P0=weizhi[7];
+*** ERROR C202 IN LINE 168 OF clock.c: 'weizhi': undefined identifier
+ 169   2                      P2=0xFF;P0=num[second%10];
+ 170   2                      delay_ms(1);
+ 171   2                            
+ 172   2                      delay_ms(1);
+ 173   2                      P2=0xC0;P0=weizhi[6];
+*** ERROR C202 IN LINE 173 OF clock.c: 'weizhi': undefined identifier
+ 174   2                      P2=0xFF;P0=num[second/10];
+ 175   2                      delay_ms(1);
+ 176   2                      
+ 177   2                      delay_ms(1);
+ 178   2                      P2=0xC0;P0=weizhi[0];
+*** ERROR C202 IN LINE 178 OF clock.c: 'weizhi': undefined identifier
+ 179   2                      P2=0xFF;P0=num[hour/10];
+ 180   2                      delay_ms(1);
+ 181   2                      
+ 182   2                      delay_ms(1);
+ 183   2                      P2=0xC0;P0=weizhi[1];
+*** ERROR C202 IN LINE 183 OF clock.c: 'weizhi': undefined identifier
+ 184   2                      P2=0xFF;P0=num[hour%10];
+ 185   2                      delay_ms(1);
+ 186   2                    
+ 187   2                    }
+ 188   1                    i=50;
+ 189   1                    while(j--)
+ 190   1                    {
+ 191   2                            
+ 192   2                P2=0xC0;P0=weizhi[3];
+*** ERROR C202 IN LINE 192 OF clock.c: 'weizhi': undefined identifier
+ 193   2                P2=0xFF;P0=num[11];       
+ 194   2                delay_ms(1);
+ 195   2                P2=0xC0;P0=weizhi[7];
+*** ERROR C202 IN LINE 195 OF clock.c: 'weizhi': undefined identifier
+ 196   2                P2=0xFF;P0=num[11];
+ 197   2                delay_ms(1);  
+ 198   2                      
+ 199   2                      delay_ms(1);
+ 200   2                      P2=0xC0;P0=weizhi[5];
+*** ERROR C202 IN LINE 200 OF clock.c: 'weizhi': undefined identifier
+ 201   2                      P2=0xFF;P0=num[10];
+ 202   2                      delay_ms(1);
+ 203   2                      
+ 204   2                      delay_ms(1);
+ 205   2                      P2=0xC0;P0=weizhi[2];
+*** ERROR C202 IN LINE 205 OF clock.c: 'weizhi': undefined identifier
+ 206   2                      P2=0xFF;P0=num[10];
+ 207   2                      delay_ms(1);
+ 208   2                      
+ 209   2                      delay_ms(1);
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 5   
+
+ 210   2                      P2=0xC0;P0=weizhi[7];
+*** ERROR C202 IN LINE 210 OF clock.c: 'weizhi': undefined identifier
+ 211   2                      P2=0xFF;P0=num[second%10];
+ 212   2                      delay_ms(1);
+ 213   2                            
+ 214   2                      delay_ms(1);
+ 215   2                      P2=0xC0;P0=weizhi[6];
+*** ERROR C202 IN LINE 215 OF clock.c: 'weizhi': undefined identifier
+ 216   2                      P2=0xFF;P0=num[second/10];
+ 217   2                      delay_ms(1);
+ 218   2                      
+ 219   2                      delay_ms(1);
+ 220   2                      P2=0xC0;P0=weizhi[0];
+*** ERROR C202 IN LINE 220 OF clock.c: 'weizhi': undefined identifier
+ 221   2                      P2=0xFF;P0=num[hour/10];
+ 222   2                      delay_ms(1);
+ 223   2                      
+ 224   2                      delay_ms(1);
+ 225   2                      P2=0xC0;P0=weizhi[1];
+*** ERROR C202 IN LINE 225 OF clock.c: 'weizhi': undefined identifier
+ 226   2                      P2=0xFF;P0=num[hour%10];
+ 227   2                      delay_ms(1);
+ 228   2                    }
+ 229   1                    j=50;
+ 230   1                                
+ 231   1      }
+ 232          void second_blink()
+ 233          {
+ 234   1        int mode=3;
+ 235   1        int i=50,j=50;
+ 236   1        if(R1==0)
+ 237   1        {
+ 238   2          delay_ms(50);
+ 239   2          if(R1==0)
+ 240   2          {
+ 241   3            second++;
+ 242   3            if(second==60) second=0;
+ 243   3            while(R1==0);
+ 244   3          }
+ 245   2        }
+ 246   1        if(R4==0)
+ 247   1        {
+ 248   2          delay_ms(50);
+ 249   2          if(R4==0)
+ 250   2          {
+ 251   3            second--;
+ 252   3            if(second==0) second=60;
+ 253   3            while(R4==0);
+ 254   3          }
+ 255   2        }
+ 256   1        while(i--)
+ 257   1                    {
+ 258   2                      P2=0xC0;P0=weizhi[6];
+*** ERROR C202 IN LINE 258 OF clock.c: 'weizhi': undefined identifier
+ 259   2                      P2=0xFF;P0=num[second/10];//ÃëµÄÊ®Î»
+ 260   2                      delay_ms(1);
+ 261   2                      P2=0xC0;P0=weizhi[7];
+*** ERROR C202 IN LINE 261 OF clock.c: 'weizhi': undefined identifier
+ 262   2                      P2=0xFF;P0=num[second%10];//ÃëµÄ¸öÎ»
+ 263   2                      delay_ms(1);
+ 264   2                      
+ 265   2                      
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 6   
+
+ 266   2                      delay_ms(1);
+ 267   2                      P2=0xC0;P0=weizhi[5];
+*** ERROR C202 IN LINE 267 OF clock.c: 'weizhi': undefined identifier
+ 268   2                      P2=0xFF;P0=num[10];
+ 269   2                      delay_ms(1);
+ 270   2                      
+ 271   2                      delay_ms(1);
+ 272   2                      P2=0xC0;P0=weizhi[2];
+*** ERROR C202 IN LINE 272 OF clock.c: 'weizhi': undefined identifier
+ 273   2                      P2=0xFF;P0=num[10];
+ 274   2                      delay_ms(1);
+ 275   2                      
+ 276   2                      delay_ms(1);
+ 277   2                      P2=0xC0;P0=weizhi[4];
+*** ERROR C202 IN LINE 277 OF clock.c: 'weizhi': undefined identifier
+ 278   2                      P2=0xFF;P0=num[minute%10];
+ 279   2                      delay_ms(1);
+ 280   2                            
+ 281   2                      delay_ms(1);
+ 282   2                      P2=0xC0;P0=weizhi[3];
+*** ERROR C202 IN LINE 282 OF clock.c: 'weizhi': undefined identifier
+ 283   2                      P2=0xFF;P0=num[minute/10];
+ 284   2                      delay_ms(1);
+ 285   2                      
+ 286   2                      delay_ms(1);
+ 287   2                      P2=0xC0;P0=weizhi[0];
+*** ERROR C202 IN LINE 287 OF clock.c: 'weizhi': undefined identifier
+ 288   2                      P2=0xFF;P0=num[hour/10];
+ 289   2                      delay_ms(1);
+ 290   2                      
+ 291   2                      delay_ms(1);
+ 292   2                      P2=0xC0;P0=weizhi[1];
+*** ERROR C202 IN LINE 292 OF clock.c: 'weizhi': undefined identifier
+ 293   2                      P2=0xFF;P0=num[hour%10];
+ 294   2                      delay_ms(1);
+ 295   2                    
+ 296   2                    }
+ 297   1                    i=50;
+ 298   1                    while(j--)
+ 299   1                    {
+ 300   2                            
+ 301   2                      P2=0xC0;P0=weizhi[6];
+*** ERROR C202 IN LINE 301 OF clock.c: 'weizhi': undefined identifier
+ 302   2                      P2=0xFF;P0=num[11];       
+ 303   2                      delay_ms(1);
+ 304   2                      P2=0xC0;P0=weizhi[7];
+*** ERROR C202 IN LINE 304 OF clock.c: 'weizhi': undefined identifier
+ 305   2                      P2=0xFF;P0=num[11];
+ 306   2                      delay_ms(1);  
+ 307   2                      
+ 308   2                      delay_ms(1);
+ 309   2                      P2=0xC0;P0=weizhi[5];
+*** ERROR C202 IN LINE 309 OF clock.c: 'weizhi': undefined identifier
+ 310   2                      P2=0xFF;P0=num[10];
+ 311   2                      delay_ms(1);
+ 312   2                      
+ 313   2                      delay_ms(1);
+ 314   2                      P2=0xC0;P0=weizhi[2];
+*** ERROR C202 IN LINE 314 OF clock.c: 'weizhi': undefined identifier
+ 315   2                      P2=0xFF;P0=num[10];
+ 316   2                      delay_ms(1);
+ 317   2                      
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 7   
+
+ 318   2                      delay_ms(1);
+ 319   2                      P2=0xC0;P0=weizhi[4];
+*** ERROR C202 IN LINE 319 OF clock.c: 'weizhi': undefined identifier
+ 320   2                      P2=0xFF;P0=num[minute%10];
+ 321   2                      delay_ms(1);
+ 322   2                            
+ 323   2                      delay_ms(1);
+ 324   2                      P2=0xC0;P0=weizhi[3];
+*** ERROR C202 IN LINE 324 OF clock.c: 'weizhi': undefined identifier
+ 325   2                      P2=0xFF;P0=num[minute/10];
+ 326   2                      delay_ms(1);
+ 327   2                      
+ 328   2                      delay_ms(1);
+ 329   2                      P2=0xC0;P0=weizhi[0];
+*** ERROR C202 IN LINE 329 OF clock.c: 'weizhi': undefined identifier
+ 330   2                      P2=0xFF;P0=num[hour/10];
+ 331   2                      delay_ms(1);
+ 332   2                      
+ 333   2                      delay_ms(1);
+ 334   2                      P2=0xC0;P0=weizhi[1];
+*** ERROR C202 IN LINE 334 OF clock.c: 'weizhi': undefined identifier
+ 335   2                      P2=0xFF;P0=num[hour%10];
+ 336   2                      delay_ms(1);
+ 337   2                    }
+ 338   1                    j=50;
+ 339   1      }
+ 340          void Init()//³õÊ¼»¯¾ØÕó¼üÅÌ
+ 341          {
+ 342   1        R1=R2=R3=R4=1;
+ 343   1      }
+ 344          void INT0_Init(void)//Íâ²¿ÖÐ¶Ï0
+ 345            {
+ 346   1        IT0 = 1;  
+ 347   1        EX0 = 1;    
+ 348   1        EA = 1; 
+ 349   1        IT1=1;
+ 350   1        EX1=1;    
+ 351   1      }
+ 352          void Init_timer0()      
+ 353          {
+ 354   1        TMOD = 0x01;      
+ 355   1        TH0 = (65535 - 50000) / 256;    
+ 356   1        TL0 = (65535 - 50000) % 256;  
+ 357   1        EA  = 1;     
+ 358   1        ET0 = 1;     
+ 359   1        TR0 = 1;     
+ 360   1      }
+ 361          
+ 362          void INT0_handle(void) interrupt 0//Íâ²¿ÖÐ¶ÏµÄ½øÈëº¯Êý
+ 363            {
+ 364   1          int hour_data=0;
+ 365   1          int minute_data=0;
+ 366   1          int second_data=0;
+ 367   1          int i=50,j=50;
+ 368   1          int count_left =0;
+ 369   1          int count_right =0;
+ 370   1              
+ 371   1      while(1)
+ 372   1              {
+ 373   2                second_blink();
+ 374   2                if(R2==0)
+ 375   2                        {
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 8   
+
+ 376   3                          delay_ms(50);
+ 377   3                          if(R2==0)
+ 378   3                          {     
+ 379   4                            count_right++;
+ 380   4                            while(R2==0);
+ 381   4                          }
+ 382   3                        }
+ 383   2      switch(count_right)
+ 384   2                        {
+ 385   3                          case 1: 
+ 386   3                                while(1)
+ 387   3                                {
+ 388   4                            hour_blink();
+ 389   4                            if(R2==0) break;
+ 390   4                            if(R3==0) 
+ 391   4                              {
+ 392   5                                count_left=0;
+ 393   5                                break;
+ 394   5                              }
+ 395   4                            }
+ 396   3                          case 2:
+ 397   3                            while(1)
+ 398   3                              {
+ 399   4                                minute_blink();
+ 400   4                                if(R2==0)
+ 401   4                                        {
+ 402   5                                          count_right=0;
+ 403   5                                          break;
+ 404   5                                        }
+ 405   4                                if(R3==0) 
+ 406   4                                        {
+ 407   5                                          count_left=2;
+ 408   5                                          break;
+ 409   5                                        }
+ 410   4                              }
+ 411   3                        } 
+ 412   2                if(R3==0)
+ 413   2                        {
+ 414   3                          delay_ms(50);
+ 415   3                          if(R3==0)
+ 416   3                          {     
+ 417   4                            count_left++;
+ 418   4                            while(R3==0);
+ 419   4                          }
+ 420   3                        }
+ 421   2      switch(count_left)
+ 422   2                        {
+ 423   3                          case 1: 
+ 424   3                            while(1)
+ 425   3                            {
+ 426   4                            minute_blink();
+ 427   4                            if(R3==0) break;
+ 428   4                            if(R2==0) 
+ 429   4                              {
+ 430   5                                count_right=0;
+ 431   5                                break;
+ 432   5                              }
+ 433   4                            }
+ 434   3                          case 2:
+ 435   3                            while(1)
+ 436   3                              {
+ 437   4                                hour_blink();
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 9   
+
+ 438   4                                if(R3==0)
+ 439   4                                        {
+ 440   5                                          count_left=0;
+ 441   5                                          break;
+ 442   5                                        }
+ 443   4                                if(R2==0) 
+ 444   4                                        {
+ 445   5                                          count_right=2;
+ 446   5                                          break;
+ 447   5                                        }
+ 448   4                              }
+ 449   3                        } 
+ 450   2                }
+ 451   1                                  
+ 452   1          }
+ 453          void Service_timer0() interrupt 1//¶¨Ê±Æ÷0
+ 454          {
+ 455   1        TH0 = (65535 - 50000) / 256;    
+ 456   1        TL0 = (65535 - 50000) % 256;  
+ 457   1        count++;
+ 458   1        if(count == 20)   
+ 459   1        {
+ 460   2          second++;
+ 461   2          count = 0;
+ 462   2        } 
+ 463   1        if(second == 60)
+ 464   1        {
+ 465   2          minute++;
+ 466   2          second=0;
+ 467   2        }
+ 468   1        if(minute==60)
+ 469   1        {
+ 470   2          hour++;
+ 471   2          minute=0;
+ 472   2          if(hour==24) hour=0;
+ 473   2        }
+ 474   1      }
+ 475          
+ 476          void main()
+ 477            {
+ 478   1          allinit();
+ 479   1          INT0_Init();
+ 480   1        Init_timer0();
+ 481   1          while(1)
+ 482   1            {   
+ 483   2              
+ 484   2        delay_ms(1);
+ 485   2        shumaguan_control(6,second/10);
+ 486   2      //  P2=0xC0;P0=weizhi[6];
+ 487   2      //  P2=0xFF;P0=num[second/10];//ÃëµÄÊ®Î»
+ 488   2        delay_ms(1);
+ 489   2      
+ 490   2        shumaguan_control(7,second%10);
+ 491   2      //  P2=0xC0;P0=weizhi[7];
+ 492   2      //  P2=0xFF;P0=num[second%10];//ÃëµÄ¸öÎ»
+ 493   2        delay_ms(1);
+ 494   2      
+ 495   2        P2=0xC0;P0=weizhi[5];
+ 496   2        P2=0xFF;P0=num[10];
+ 497   2        delay_ms(1);
+ 498   2              
+ 499   2      shumaguan_control(4,minute%10);
+C51 COMPILER V9.56.0.0   CLOCK                                                             03/29/2022 10:43:46 PAGE 10  
+
+ 500   2      //  P2=0xC0;P0=weizhi[4];
+ 501   2      //  P2=0xFF;P0=num[minute%10];
+ 502   2        delay_ms(1);
+ 503   2              
+ 504   2        delay_ms(1);
+ 505   2        P2=0xC0;P0=weizhi[3];
+ 506   2        P2=0xFF;P0=num[minute/10];
+ 507   2        delay_ms(1);
+ 508   2        
+ 509   2        delay_ms(1);
+ 510   2        P2=0xC0;P0=weizhi[0];
+ 511   2        P2=0xFF;P0=num[hour/10];
+ 512   2        delay_ms(1);
+ 513   2        
+ 514   2        delay_ms(1);
+ 515   2        P2=0xC0;P0=weizhi[1];
+ 516   2        P2=0xFF;P0=num[hour%10];
+ 517   2        delay_ms(1);
+ 518   2        
+ 519   2        delay_ms(1);
+ 520   2        P2=0xC0;P0=weizhi[2];
+ 521   2        P2=0xFF;P0=num[10];
+ 522   2        delay_ms(1);
+ 523   2          }
+ 524   1        }
+ 525          
+ 526          
+ 527          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  49 ERROR(S)
